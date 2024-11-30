@@ -1,7 +1,9 @@
 package com.atlysassignment.di
 
 import com.atlysassignment.data.remote.MovieApiService
+import com.atlysassignment.data.repositoryImpl.MovieDetailRepositoryImpl
 import com.atlysassignment.data.repositoryImpl.MovieListRepositoryImpl
+import com.atlysassignment.domain.repository.MovieDetailRepository
 import com.atlysassignment.domain.repository.MovieListRepository
 import dagger.Module
 import dagger.Provides
@@ -44,7 +46,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesMovieRepository(apiService: MovieApiService): MovieListRepository {
+    fun providesMovieListRepository(apiService: MovieApiService): MovieListRepository {
         return MovieListRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun providesMovieDetailRepository(apiService: MovieApiService): MovieDetailRepository {
+        return MovieDetailRepositoryImpl(apiService)
     }
 }

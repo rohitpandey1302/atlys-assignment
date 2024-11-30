@@ -33,7 +33,7 @@ import com.atlysassignment.ui.viewmodels.HomePageViewModel
 private const val TMDB_IMAGE_PATH = "https://image.tmdb.org/t/p/w500"
 
 @Composable
-fun HomePageScreen(viewModel: HomePageViewModel, onMovieClick: (Movie) -> Unit) {
+fun HomePageScreen(viewModel: HomePageViewModel, onMovieClick: (Int) -> Unit) {
     when(val state = viewModel.movieListFLow.collectAsState().value) {
         is NetworkState.Loading -> Box(
             modifier = Modifier.fillMaxSize(),
@@ -46,7 +46,7 @@ fun HomePageScreen(viewModel: HomePageViewModel, onMovieClick: (Movie) -> Unit) 
 }
 
 @Composable
-fun HomepageMovieList(movieList: List<Movie>, onMovieClick: (Movie) -> Unit) {
+fun HomepageMovieList(movieList: List<Movie>, onMovieClick: (Int) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
@@ -70,12 +70,12 @@ fun HomepageMovieList(movieList: List<Movie>, onMovieClick: (Movie) -> Unit) {
 }
 
 @Composable
-fun HomePageMovieItem(movie: Movie, onMovieClick: (Movie) -> Unit) {
+fun HomePageMovieItem(movie: Movie, onMovieClick: (Int) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { onMovieClick(movie) },
+            .clickable { onMovieClick(movie.id) },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
