@@ -2,8 +2,8 @@ package com.atlysassignment.model
 
 data class Movie(
     val id: Int,
-    val title: String,
-    val originalTitle: String,
-    val overview: String,
-    val posterPath: String,
+    val title: String? = null,
+    val originalTitle: String? = null,
+    val overview: String? = null,
+    val posterPath: String? = null,
 )

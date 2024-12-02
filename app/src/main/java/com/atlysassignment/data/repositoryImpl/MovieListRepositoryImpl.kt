@@ -23,4 +23,19 @@ class MovieListRepositoryImpl(
             NetworkState.Error("Error occurred:- ${exception.localizedMessage}")
         }
     }
+
+    override suspend fun searchMovie(query: String): NetworkState<List<Movie>> {
+        return try {
+            val response = movieApiService.searchMovie(query)
+            val result = response.body()
+
+            if (response.isSuccessful && result != null) {
+                NetworkState.Success(MovieMapper.mapList(result))
+            } else {
+                NetworkState.Error("Something went wrong")
+            }
+        } catch (exception: Exception) {
+            NetworkState.Error("Error occurred:- ${exception.localizedMessage}")
+        }
+    }
 }

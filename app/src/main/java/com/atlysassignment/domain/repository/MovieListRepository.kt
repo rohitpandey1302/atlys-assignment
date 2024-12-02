@@ -5,4 +5,5 @@ import com.atlysassignment.ui.viewState.NetworkState
 
 interface MovieListRepository {
     suspend fun fetchMovieList(): NetworkState<List<Movie>>
+    suspend fun searchMovie(query: String): NetworkState<List<Movie>>
 }

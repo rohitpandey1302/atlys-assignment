@@ -6,10 +6,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.atlysassignment.compose.DetailPageScreen
 import com.atlysassignment.compose.HomePageScreen
-import com.atlysassignment.ui.viewmodels.HomePageViewModel
+import com.atlysassignment.ui.viewmodels.MainActivityViewModel
 
 @Composable
-fun NavGraph(viewModel: HomePageViewModel) {
+fun NavGraph(viewModel: MainActivityViewModel) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "movieList") {
