@@ -25,19 +25,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.atlysassignment.R
 import com.atlysassignment.model.Movie
 import com.atlysassignment.ui.viewState.NetworkState
-import com.atlysassignment.ui.viewmodels.HomePageViewModel
+import com.atlysassignment.ui.viewmodels.MainActivityViewModel
 
 private const val TMDB_IMAGE_PATH = "https://image.tmdb.org/t/p/w500"
 
 @Composable
 fun DetailPageScreen(
     movieId: String,
-    viewModel: HomePageViewModel,
+    viewModel: MainActivityViewModel,
     navController: NavController
 ) {
     val state by viewModel.movieDetailsFLow.collectAsState()
@@ -59,11 +61,14 @@ fun DetailPageScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieDetail(movie: Movie?, navController: NavController) {
+fun MovieDetail(
+    movie: Movie?,
+    navController: NavController
+) {
     movie?.let {
         Column {
             TopAppBar(
-                title = { Text(movie.title) },
+                title = { Text(movie.title ?: "") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -80,7 +85,11 @@ fun MovieDetail(movie: Movie?, navController: NavController) {
                     .padding(16.dp),
             ) {
                 Image(
-                    painter = rememberAsyncImagePainter(TMDB_IMAGE_PATH + movie.posterPath),
+                    painter = rememberAsyncImagePainter(
+                        model = TMDB_IMAGE_PATH + movie.posterPath,
+                        placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+                        error = painterResource(id = R.drawable.ic_launcher_foreground)
+                    ),
                     contentDescription = movie.title,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -89,9 +98,9 @@ fun MovieDetail(movie: Movie?, navController: NavController) {
                         .clip(MaterialTheme.shapes.medium)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Text(movie.title, style = MaterialTheme.typography.headlineSmall)
+                Text(movie.title ?: "", style = MaterialTheme.typography.headlineSmall)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(movie.overview, style = MaterialTheme.typography.bodyLarge)
+                Text(movie.overview ?: "", style = MaterialTheme.typography.bodyLarge)
             }
         }
     }
